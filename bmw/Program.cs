@@ -73,11 +73,16 @@ namespace bmw
             foreach (var src in destCounter)
             {
                 Console.WriteLine($"Src: {BitConverter.ToString(new[] { (byte)src.Key })}, Val: {src.Value}");
-                var knownDevice = (BusDevice)src.Key;
+                var knownDevice = src.Key;
                 if (Enum.IsDefined(typeof(BusDevice), knownDevice))
                 {
                     Console.WriteLine(knownDevice);
                 }
+            }
+
+            foreach (var p in extractor.OutputPackets.Where(pkt => pkt.From == BusDevice.ParkDistanceControl))
+            {
+                Debugger.Break();
             }
 
             Debugger.Break();

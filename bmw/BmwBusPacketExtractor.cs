@@ -94,6 +94,8 @@ namespace bmw
                     case ExtractorState.BuildingPacket:
                         this.packet.Payload.Add(this.bytes[this.currentBytePointer]);
 
+                        // If we have read number of bytes specified by the packet's Len field,
+                        // we should expect the XOR
                         if (this.currentBytePointer - this.messageStartPointer == packet.Len)
                         {
                             this.state = ExtractorState.WaitingForXor;
@@ -103,13 +105,14 @@ namespace bmw
 
                         break;
                     case ExtractorState.WaitingForXor:
-                        // 1. add byte to package
+                        // 1. add byte to packet
                         this.packet.Payload.Add(this.bytes[this.currentBytePointer++]);
 
                         // Perform xor validation
                         if (this.packet.CheckXor())
                         {
-                            // If checksum was ok, proceed
+                            // If checksum was ok, add finished packet to output and 
+                            // start waiting for the next packet
                             this.messageStartPointer = this.currentBytePointer;
                             this.OutputPackets.Enqueue(this.packet);
                             this.state = ExtractorState.WaitingForStart;
@@ -119,9 +122,6 @@ namespace bmw
                             this.state = ExtractorState.LostSync;
                         }
 
-                        // 2. if no more bytes expected, perform xor
-                        //    if xor = ok, add message to queue, advance both pointers, and change state to waitingstart
-                        //    else advance both pointers by 1 and set state to lostsync
                         break;
                     case ExtractorState.LostSync:
                         Console.WriteLine($"State: {this.state}");

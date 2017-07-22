@@ -6,6 +6,14 @@ using System.Threading.Tasks;
 
 namespace bmw
 {
+    /// <summary>
+    /// ---------------------------------------------
+    /// |Source|Length|Dest|       Data       | Xor |
+    /// |  ID  |      | ID |                  |Chksm|
+    /// ---------------------------------------------
+    /// 
+    /// 'Length' represents len(DestId) + len(Data) + len(xor)
+    /// </summary>
     class BusPacket
     {
         public BusPacket()

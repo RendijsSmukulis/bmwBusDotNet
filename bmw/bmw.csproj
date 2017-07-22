@@ -44,7 +44,7 @@
   <ItemGroup>
     <Compile Include="BmwBusPacketExtractor.cs" />
     <Compile Include="BusPacket.cs" />
-    <Compile Include="DevicesEnum.cs" />
+    <Compile Include="BusDeviceEnum.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

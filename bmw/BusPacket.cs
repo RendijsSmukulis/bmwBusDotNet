@@ -13,11 +13,11 @@ namespace bmw
             this.Payload = new List<byte>();
         }
 
-        public Device From { get; set; }
+        public BusDevice From { get; set; }
 
         public byte Len { get; set; }
 
-        public Device Dest { get; set; }
+        public BusDevice Dest { get; set; }
 
         public List<byte> Payload { get; set; }
 

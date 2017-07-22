@@ -27,14 +27,14 @@ namespace bmw
                 z = f.ReadByte();
             }
 
-            var sourceCounter = new Dictionary<Device, int>();
-            var destCounter = new Dictionary<Device, int>();
+            var sourceCounter = new Dictionary<BusDevice, int>();
+            var destCounter = new Dictionary<BusDevice, int>();
 
             Console.WriteLine();
             Console.WriteLine("Sources: ");
             foreach (var p in extractor.OutputPackets)
             {
-                if (p.From == (Device)0x50)
+                if (p.From == (BusDevice)0x50)
                 {
                     var z2 = BitConverter.ToString(p.Payload.ToArray());
                     Console.WriteLine($"Steering wheel: {z2}");
@@ -61,8 +61,8 @@ namespace bmw
             foreach (var src in sourceCounter)
             {
                 Console.WriteLine($"Src: {BitConverter.ToString(new[] { (byte)src.Key })}, Val: {src.Value}");
-                var knownDevice = (Device)src.Key;
-                if (Enum.IsDefined(typeof(Device), knownDevice))
+                var knownDevice = (BusDevice)src.Key;
+                if (Enum.IsDefined(typeof(BusDevice), knownDevice))
                 {
                     Console.WriteLine(knownDevice);
                 }
@@ -73,8 +73,8 @@ namespace bmw
             foreach (var src in destCounter)
             {
                 Console.WriteLine($"Src: {BitConverter.ToString(new[] { (byte)src.Key })}, Val: {src.Value}");
-                var knownDevice = (Device)src.Key;
-                if (Enum.IsDefined(typeof(Device), knownDevice))
+                var knownDevice = (BusDevice)src.Key;
+                if (Enum.IsDefined(typeof(BusDevice), knownDevice))
                 {
                     Console.WriteLine(knownDevice);
                 }

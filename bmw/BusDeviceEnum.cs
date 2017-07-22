@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace bmw
 {
-    enum Device
+    enum BusDevice
     {
         Broadcast = 0,
         CdPlayer = 0x18,

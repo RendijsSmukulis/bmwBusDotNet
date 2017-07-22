@@ -61,7 +61,7 @@ namespace bmw
                         // 1. Create a new message
                         this.packet = new BusPacket
                         {
-                            From = bytes[currentBytePointer++]
+                            From = (Device)bytes[currentBytePointer++]
                         };
 
                         // 2. change state to WaitForLen
@@ -86,7 +86,7 @@ namespace bmw
 
                         break;
                     case ExtractorState.WaitingForDestination:
-                        this.packet.Dest = this.bytes[this.currentBytePointer];
+                        this.packet.Dest = (Device)this.bytes[this.currentBytePointer];
                         this.currentBytePointer++;
                         this.state = ExtractorState.BuildingPacket;
 

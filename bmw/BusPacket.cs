@@ -17,11 +17,13 @@ namespace bmw
 
         public byte Len { get; set; }
 
+        public byte Dest { get; set; }
+
         public List<byte> Payload { get; set; }
 
         public bool CheckXor()
         {
-            var checksum = this.From ^ this.Len;
+            var checksum = this.From ^ this.Len ^ this.Dest;
             foreach (var b in Payload)
             {
                 checksum ^= b;

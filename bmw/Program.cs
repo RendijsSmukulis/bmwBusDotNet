@@ -40,8 +40,6 @@ namespace bmw
                     Console.WriteLine($"Steering wheel: {z2}");
                 }
 
-                var tobyte = p.Payload[0];
-
                 if (sourceCounter.ContainsKey(p.From))
                 {
                     sourceCounter[p.From]++;
@@ -50,13 +48,13 @@ namespace bmw
                     sourceCounter[p.From] = 1;
                 }
 
-                if (destCounter.ContainsKey(tobyte))
+                if (destCounter.ContainsKey(p.Dest))
                 {
-                    destCounter[tobyte]++;
+                    destCounter[p.Dest]++;
                 }
                 else
                 {
-                    destCounter[tobyte] = 1;
+                    destCounter[p.Dest] = 1;
                 }
             }
 

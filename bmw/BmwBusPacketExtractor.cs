@@ -14,6 +14,8 @@ namespace bmw
 
         WaitingForLength,
 
+        WaitingForDestination,
+
         WaitingForXor,
 
         BuildingPacket,
@@ -79,8 +81,14 @@ namespace bmw
                             // 2. set message len to the byte val
                             // 3. advance byte pointer by 1
                             this.packet.Len = lenValue;
-                            this.state = ExtractorState.BuildingPacket;
+                            this.state = ExtractorState.WaitingForDestination;
                         }
+
+                        break;
+                    case ExtractorState.WaitingForDestination:
+                        this.packet.Dest = this.bytes[this.currentBytePointer];
+                        this.currentBytePointer++;
+                        this.state = ExtractorState.BuildingPacket;
 
                         break;
                     case ExtractorState.BuildingPacket:

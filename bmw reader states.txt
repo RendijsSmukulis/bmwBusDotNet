@@ -1,0 +1,32 @@
+
+
+              ------------------
+ raw bytes   | bytes-to-packets |   
+------------>|  state machine   |
+             |                  |
+             |         packet   |
+             |         queue  ------->
+             |                  |
+             | internal         |
+             |  state:          |
+             | lost_sync        |
+             | waiting_for_start|
+             | waiting_for_len  |
+             | waiting_for_dest |
+             | waiting_fo_xor   | 
+             | building_packet  |
+              ------------------
+
+
+States:
+ waiting_for_start -> waiting_for_len when received 1 byte
+ waiting_for_len -> waiting_for_dest when received byte > 0 (or 3?)
+                 -> lost_sync when byte == 0
+ waiting_for_dest -> building_msg
+ building_msg -> building_msg if more bytes needed
+              -> waiting_fo_xor if enough bytes retrieved
+ waiting_for_xor -> waiting_for_start if all bytes received and succesful
+                 -> lost_sync if parse failed. skip a byte. 
+ lost_sync -> lost_sync if current byte can not be rebuilt into a full message 
+           -> lost_sync if not enough bytes
+           -> waiting_for_start if current (and next?) message can be reconstructed
